@@ -1,0 +1,186 @@
+@import config
+@import 'mixin'
+@import 'blocks/**/*'
+html
+  margin: 0!important
+  padding: 0!important
+body
+  background-color: #fff
+  color: #000000
+  min-width: 324px
+input:-webkit-autofill
+  box-shadow: 0 0 0px 1000px #f5f5f5 inset
+
+.notification
+  font-family: $Montserrat
+  font-style: normal
+  font-weight: normal
+  font-size: 12px
+  line-height: 15px
+  color: rgba(255, 255, 255, 0.9)
+  position: absolute
+  right: 10px
+  top: 10px
+.wrapper
+  width: 100%
+  height: 100%
+  position: relative
+  // background-color: #E5E5E5
+  z-index: 5
+.soc_icon
+  display: flex
+  justify-content: flex-start
+  flex-direction: row
+  list-style: none
+  gap: 0 15px
+  li
+    a
+      cursor: pointer
+      font-size: 12px
+      text-decoration: none
+      color: rgba(0, 0, 0, 0.8)
+      width: 30px
+      height: 30px
+      border-radius: 100%
+      display: flex
+      justify-content: center
+      align-items: center
+      border: 1px solid rgba(0, 0, 0, 0.8)
+      &:hover
+        color: #fff
+        background-color: rgba(0, 0, 0, 0.8)
+.moblogo
+  margin-top: 18px
+  width: 63.64px
+  display: none
+section
+  padding: 50px 70px
+  &.section
+    &_offer
+      padding: 0
+      margin-top: -54px
+      position: relative
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: space-between
+      width: 100%
+      height: 970px
+      overflow: hidden
+      background-attachment: scroll
+      background-position: 50% 50%
+      background-repeat: no-repeat
+      background-size: cover
+      .offer_bg
+        position: absolute
+        left: 0
+        bottom: 0
+        width: 100%
+        height: 100%
+        background-position: bottom center
+        background-size: cover
+        background-repeat: no-repeat
+        z-index: 1
+        &:nth-child(1)
+          z-index: 0
+      .soc_icon
+        margin-left: 100px
+        margin-bottom: 70px
+      .btn
+        display: flex
+        position: relative
+        flex-direction: row
+        justify-content: center
+        text-decoration: none
+        align-items: center
+        width: 238px
+        height: 54px
+        margin-top: 50px
+        color: #fff
+        box-sizing: border-box
+        border-radius: 1px
+        font-family: $Montserrat
+        font-style: normal
+        font-weight: bold
+        font-size: 14px
+        line-height: 100%
+        color: #FFFFFF
+        background: #A90000
+        box-shadow: 0px 3px 11px rgba(0, 0, 0, 0.15)
+        border-radius: 1px
+        z-index: 10
+    &_news
+      display: flex
+      justify-content: space-around
+      flex-wrap: wrap-reverse
+      background-color: #fff
+    &_our_pets
+      
+    &_for_volunteers
+#primary
+  width: 100%
+  max-width: 1200px
+  margin: 70px auto   
+#deadline-message
+  display: flex
+  font-family: $Montserrat
+  font-style: normal
+  font-weight: bold
+  font-size: 44px
+  line-height: 100%
+  color: #fff
+  opacity: 0.9
+.countdown
+  position: relative
+  width: 100%
+  max-width: 500px
+  margin-bottom: 30px
+  display: flex
+  justify-content: center
+  gap: 80px
+  height: 65px
+  z-index: 999  
+  &-numbers
+    // width: 120px
+    display: flex
+    justify-content: center
+    align-items: flex-end
+    flex-direction: column
+  &-time
+    display: flex
+    justify-content: flex-end
+    font-family: $Montserrat
+    font-style: normal
+    font-weight: bold
+    font-size: 48px
+    line-height: 100%
+    letter-spacing: 0.01em
+    color: #FFFFFF
+  &-text
+    display: flex
+    justify-content: flex-end
+    font-family: $Montserrat
+    font-style: normal
+    font-weight: bold
+    font-size: 18px
+    line-height: 100%
+    color: rgba(0, 0, 0, 0.8)
+    opacity: 0.9
+@import 'header'
+@import 'stackslider'
+@import 'sidebar'
+@import 'carousel'
+@import 'gallery'
+@import 'contact'
+@import 'navigation'
+@import 'breadcrumbs'
+@import 'filter'
+@import 'pagination'
+@import 'offer'
+@import 'news'
+@import 'tabs'
+@import 'card'
+@import 'burger'
+@import 'form'
+@import 'footer'
+@import 'media'

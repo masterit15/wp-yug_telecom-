@@ -1,0 +1,103 @@
+.filter
+  display: flex
+  width: 100%
+  max-width: 750px
+  justify-content: space-between
+  margin: 20px 0
+  &_date
+    background: #FFFFFF
+    border: 1px solid rgba(0, 0, 0, 0.06)
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.06)
+    border-radius: 1px
+    padding: 10px
+    font-family: $Montserrat
+    font-style: normal
+    font-weight: 500
+    font-size: 10px
+    line-height: 12px
+    color: rgba(0, 0, 0, 0.8)
+  &_sort
+    background-color: #fff
+    font-family: Montserrat
+    font-style: normal
+    font-weight: 600
+    font-size: 10px
+    line-height: 12px
+    color: #000000
+    border: none
+    &_btn
+      cursor: pointer
+      width: 32px
+      height: 32px
+      background: #FFFFFF
+      border: 1px solid rgba(0, 0, 0, 0.06)
+      box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.06)
+      border-radius: 1px
+  &_item
+    display: flex
+    align-items: center
+    >span
+      font-family: Montserrat
+      font-style: normal
+      font-weight: normal
+      font-size: 10px
+      line-height: 12px
+    &_wrap
+      width: 145px
+      height: 32px
+      position: relative
+      & .far, .fas
+        position: absolute
+        right: 0px
+        top: 10px
+        font-style: normal
+        font-weight: normal
+        font-size: 10px
+        line-height: 11px
+        color: rgba(0, 0, 0, 0.7)
+      & .fas
+        font-weight: 900
+.select2
+  width: auto!important
+.select2-container--default .select2-selection--single
+  background-color: #fff
+  font-family: Montserrat
+  font-style: normal
+  font-weight: 600
+  font-size: 10px
+  line-height: 12px
+  color: #000000
+  border: none
+.select2-container .select2-selection--single .select2-selection__rendered
+  padding-left: 3px
+  padding-right: 10px
+  text-align: right
+  text-overflow: inherit
+.select2-container--default .select2-selection--single .select2-selection__arrow
+  width: 7px
+  height: 8px
+  b
+    display: none
+  &::before
+    content: "\f0dd"
+    font-family: "Font Awesome 5 Pro";
+    font-weight: 900
+    position: absolute
+    right: 0
+    top: 4px
+    bottom: 0
+    margin: auto
+    font-style: normal
+    font-size: 10px
+    color: rgba(0, 0, 0, 0.7)
+.select2-dropdown
+  border-radius: 1
+  border: none
+  min-width: 120px
+  box-shadow: 0 1px 5px rgba(#000,0.6)
+.select2-container--default .select2-results__option--selected
+  background-color: rgba($accentColor, 0.2)
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable
+  background-color: $accentColor
+.select2-container--default .select2-results__option--selected
+  border-radius: 0
