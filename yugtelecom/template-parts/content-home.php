@@ -12,9 +12,10 @@
 <span class="elips-small-red"></span>
 <section class="hero">
   <div class="offer">
+    <div class="loader"></div>
     <div class="offer_wrap">
-      <h2 class="offer_title title">Не отказывай себе в качестве!</h2>
-      <p class="offer_text">Наша компания предоставляет стабильное и качественное интернет подключение  посредством оптоволоконных технологий. Каждый может подобрать подходящий ему безлимитный тарифный план, а также насладиться ночным ускорением.</p>
+      <h2 class="offer_title title"><?=get_theme_mod('offer_title')?></h2>
+      <p class="offer_text"><?=get_theme_mod('offer_text')?></p>
       <button class="offer_btn" data-action="<?php echo site_url ()?>/wp-admin/admin-ajax.php?action=form">Подключиться</button>
     </div>
   </div>
@@ -123,7 +124,7 @@
       </div>
       <ul class="rates_list_item_speed">
         <li><span>Скорость</span> <strong><?=$custom['rates_speed'][0]?> Мбит/сек</strong></li>
-        <li class="boost"><span>Ускорение<sup>1</sup></span> <strong><?=$custom['rates_boost'][0]?> Мбит/сек</strong></li>
+        <!-- <li class="boost"><span>Ускорение<sup>1</sup></span> <strong><?//=$custom['rates_boost'][0]?> Мбит/сек</strong></li> -->
       </ul>
       <div class="rates_list_item_price">
         <span class="rates_list_item_price_rub">₽</span>
@@ -152,25 +153,32 @@
 		$speed += 50;
 		}} else {echo 'Ничего не найдено';}wp_reset_postdata();?>
   </ul>
-  <span class="down_text"><sup>1</sup> - Ускорение работает с 01:00 до 08:00</span>
+  <!-- <span class="down_text"><sup>1</sup> - Ускорение работает с 01:00 до 08:00</span> -->
 </section>
 <section class="advantages">
   <h2 class="section_title title">Наши преимущества</h2>
   <ul class="advantages_list">
+  <?
+			$reviews = new WP_Query(
+			array(
+			'post_type' => 'post',
+			'post_status' => 'publish',
+			'posts_per_page' => 5,
+			// 'orderby'          => 'date',
+      // 'order'            => 'ASC',
+			'page'=> 1
+			// 'category_name' => 'news'
+			));
+			
+			if ($reviews->have_posts()) {
+				$speed = 9;
+				while ($reviews->have_posts()) {$reviews->the_post();
+		?>
     <li class="advantages_list_item">
-      <img src="<?=TURI?>/images/dist/shit.png" alt="" class="advantages_list_item_icon">
-      <h3 class="advantages_list_item_title">Надежность</h3>
-      <p class="advantages_list_item_desc">Разнообразный и богатый опыт сложившаяся структура организации обеспечивает широкому кругу (специалистов) участие в формировании дальнейших направлений развития. </p>
+      <img src="<?=get_the_post_thumbnail_url($post->ID, 'large')?>" alt="" class="advantages_list_item_icon">
+      <h3 class="advantages_list_item_title"><?the_title()?></h3>
+      <div class="advantages_list_item_desc"><?the_excerpt()?></div>
     </li>
-    <li class="advantages_list_item">
-      <img src="<?=TURI?>/images/dist/speed.png" alt="" class="advantages_list_item_icon">
-      <h3 class="advantages_list_item_title">Скорость</h3>
-      <p class="advantages_list_item_desc">Разнообразный и богатый опыт сложившаяся структура организации обеспечивает широкому кругу (специалистов) участие в формировании дальнейших направлений развития. </p>
-    </li>
-    <li class="advantages_list_item">
-      <img src="<?=TURI?>/images/dist/price.png" alt="" class="advantages_list_item_icon">
-      <h3 class="advantages_list_item_title">Конкурентные цены</h3>
-      <p class="advantages_list_item_desc">Разнообразный и богатый опыт сложившаяся структура организации обеспечивает широкому кругу (специалистов) участие в формировании дальнейших направлений развития. </p>
-    </li>
+    <?}}?>
   </ul>
 </section>

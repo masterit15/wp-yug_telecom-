@@ -1,0 +1,57 @@
+$off: #e5e5e5
+$on: #241d19
+
+@mixin b
+  border-left: 20px solid $off
+  border-top: 20px solid $off
+
+@mixin bt
+  border-left: 20px solid $on
+  border-top: 20px solid $on
+
+.loader
+  display: none
+  margin: 200px auto
+  position: relative
+  width: 20px
+  height: 20px
+  transform: rotate(45deg)
+  border-top-left-radius: 100%
+  border-left: 20px solid $off
+  border-top: 20px solid $off
+  animation: signal1 1.2s infinite
+  &:before,
+  &:after
+    content: ''
+    position: absolute
+    display: block
+    border-top-left-radius: inherit
+    border-top: inherit
+    border-left: inherit
+  &:before
+    width: 60px
+    height: 60px
+    top: -60px
+    left: -60px
+    animation: signal2 1.2s infinite
+  &:after
+    width: 100px
+    height: 100px
+    top: -100px
+    left: -100px
+    animation: signal3 1.2s infinite
+@keyframes signal1
+  0%, 15%, 35%, 60%, 80%, 100%
+    @include b
+  20%, 30%, 85%, 95%
+    @include bt
+@keyframes signal2
+  0%, 30%, 50%, 65%, 85%, 100%
+    @include b
+  35%, 45%, 70%, 80%
+    @include bt
+@keyframes signal3
+  0%, 45%, 70%, 100%
+    @include b
+  50%, 65%
+    @include bt

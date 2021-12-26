@@ -166,6 +166,7 @@ function yugtelecom_scripts() {
 	wp_enqueue_style( 'yugtelecom-main', get_template_directory_uri() . '/css/main.min.css');
 	wp_style_add_data( 'yugtelecom-style', 'rtl', 'replace' );
 
+	wp_enqueue_script( 'yugtelecom-recaptcha', 'https://www.google.com/recaptcha/api.js?render=6LcK86odAAAAAMBrh7sttKbex2LwIL1OWJn3qo3c', array(), _S_VERSION, true );
 	wp_enqueue_script( 'yugtelecom-app', get_template_directory_uri() . '/js/index.min.js', array(), _S_VERSION, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -210,6 +211,18 @@ require get_template_directory() . '/inc/dublicatePost.php';
  * form
  */
 require get_template_directory() . '/inc/form.php';
+/**
+ * handler
+ */
+require get_template_directory() . '/inc/handler.php';
+/**
+ * application
+ */
+require get_template_directory() . '/inc/application.php';
+/**
+ * supports
+ */
+require get_template_directory() . '/inc/supports.php';
 
 /**
  * Load Jetpack compatibility file.
@@ -217,4 +230,6 @@ require get_template_directory() . '/inc/form.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+
 

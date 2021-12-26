@@ -1,0 +1,153 @@
+
+
+/*==========  Desktop First Method  ==========*/
+@media only screen and (max-width : 1400px)
+	/**/
+	video
+		max-width: 700px
+	.social
+		right: 20px
+	.rates
+		&_list
+			margin: 0
+			&_item
+				min-width: 300px
+				&_speed
+					margin: 0
+					padding: 20px
+	.advantages
+		&_list
+			margin: 0
+			padding: 0
+	.footer
+		padding: 75px 20px
+/* Большие Устройства, Широкие Экраны */
+@media only screen and (max-width : 1200px)
+	/**/
+	.offer
+		&_title
+			font-size: 40px
+		&_text
+			font-size: 20px
+	section 
+		.section_title
+			font-size: 40px
+	.advantages
+		&_list
+			&_item
+				width: 340px
+@media only screen and (max-width : 1072px)
+	/**/
+	video
+		max-width: 500px
+/* Средние устройства, Настольные компьютеры */
+@media only screen and (max-width : 992px)
+	/**/
+	.burger
+		display: flex
+	.top_nav
+		display: none
+	.rates
+		&_list
+			flex-direction: column
+			gap: 30px
+			align-items: center
+			&_item
+				&::before
+					display: none
+/* Небольшие устройства, Планшеты */
+@media only screen and (max-width : 768px)
+	/**/
+	video
+		display: none
+	.tabs_column_wrap::before
+		display: none
+	/*Disable Animation on Mobile Devices*/
+	.animated
+		/*CSS transitions*/
+		-o-transition-property: none !important
+		-moz-transition-property: none !important
+		-ms-transition-property: none !important
+		-webkit-transition-property: none !important
+		transition-property: none !important
+		/*CSS transforms*/
+		-o-transform: none !important
+		-moz-transform: none !important
+		-ms-transform: none !important
+		-webkit-transform: none !important
+		transform: none !important
+		/*CSS animations*/
+		-webkit-animation: none !important
+		-moz-animation: none !important
+		-o-animation: none !important
+		-ms-animation: none !important
+		animation: none !important
+	.contact_list
+		margin-top: 30px
+		margin-right: 70px
+	.advantages
+		&_list
+			flex-direction: column
+			gap: 30px
+	.footer
+		&_list, .row
+			flex-direction: column
+			gap: 30px
+	.social
+		top: 100%
+		bottom: 0
+		flex-direction: row
+		justify-content: center
+		align-items: center
+		height: 60px
+		margin-bottom: 0
+		margin-right: -20px
+		width: 100%
+		transform: translateY(60px)
+		transition: all .3s ease
+		&.show
+			transform: translateY(0px)
+			background-color: rgba(#fff,0.9)
+			transition: all .3s ease
+/* Сверхмалые Устройства, Телефоны */
+@media only screen and (max-width : 480px)
+	/**/
+	.header .contact_list
+		display: none
+	.logo
+		width: 90px
+
+/* Пользовательские, iPhone Retina */
+@media only screen and (max-width : 320px)
+	/**/
+
+
+/*==========  Mobile First Method  ==========*/
+
+/* Пользовательские, iPhone Retina */
+@media only screen and (min-width : 320px)
+	/**/
+
+
+/* Сверхмалые Устройства, Телефоны */
+@media only screen and (min-width : 480px)
+	/**/
+
+
+/* Небольшие устройства, Планшеты */
+@media only screen and (min-width: 768px)
+	/**/
+
+
+/* Средние устройства, Настольные компьютеры */
+@media only screen and (min-width : 992px)
+	/**/
+
+
+/* Большие Устройства, Широкие Экраны */
+@media only screen and (min-width : 1200px)
+	/**/
+
+/* Большие Устройства, Ну Широкие Экраны */
+@media only screen and (min-width : 1400px)
+	/**/

@@ -27,6 +27,9 @@
 										<li><a href="/">'.get_theme_mod('address').'</a></li>
 										<li><a data-phone="'.get_theme_mod('phones').'" href="tel:'.get_theme_mod('phones').'"> '.get_theme_mod('phones').'</a></li>
 										<li><a href="mailto:'.get_theme_mod('email').'">'.get_theme_mod('email').'</a></li>
+										<li><a href="#">'.get_theme_mod('operating_mode').'</a></li>
+
+                    
 									</ul>
 								</li>
 							</ul>';

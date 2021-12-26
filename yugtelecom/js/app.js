@@ -1,12 +1,18 @@
 
 import gsap from "gsap"
 import IMask from 'imask'
+import ymaps from 'ymaps';
 const tl = gsap.timeline()
 const ratesList = document.querySelector('.rates_list')
 const popularRates = document.querySelector('.popular')
 const title = document.querySelectorAll('.title')
-
-import ymaps from 'ymaps';
+const loader = document.querySelector('.loader')
+const offer_wrap = document.querySelector('.offer_wrap')
+const burger = document.querySelector('.burger')
+const mobileMenu = document.querySelector('.nav_wrap_mob')
+let lastScrollTop = 0;
+let accardeonItems = document.querySelectorAll('.accardeon_list_item')
+const ratesBtns = document.querySelectorAll('.rates_list_item_btn')
 if(document.querySelector('#y_maps')){
   var myMap;
   const poligons = [...JSON.parse(document.querySelector('#y_maps').dataset.poligons)]
@@ -44,13 +50,16 @@ if(document.querySelector('#y_maps')){
       myMap.geoObjects.add(polygon);
       myMap.setBounds(polygon.geometry.getBounds());
     })
-    
   })
   .catch(error => console.log('Ошибка, не могу подгрузить карту', error));
 }
-
-
-
+function getRecaptcha(input) {
+  grecaptcha.ready(function() {
+    grecaptcha.execute('6LcK86odAAAAAMBrh7sttKbex2LwIL1OWJn3qo3c', {action: 'submit'}).then(function(token) {
+      input.value = token
+    });
+  });
+}
 // форматируем номера телефонов на всем сайте
 function phoneFormat(){
   let a = [...document.getElementsByTagName("a")]
@@ -81,9 +90,7 @@ function phoneFormat(){
   });
 }
 phoneFormat()
-
 // стилизуем заголовки по дизайну
-
 title.forEach(tl=>{
   let wordsArr = tl.innerHTML.split(' ')
   let span = `<span>${wordsArr[wordsArr.length - 1]}</span>`
@@ -91,9 +98,7 @@ title.forEach(tl=>{
   wordsArr.push(span)
   tl.innerHTML = wordsArr.join(' ')
 })
-
 //  изменение для карточки популярного тарифа
-
 if(popularRates){
   let popularText = `<span class="popular_text">
                       <svg width="24" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.76l-7.053 3.948 1.575-7.928L.587 8.292l8.027-.952L12 0l3.386 7.34 8.027.952-5.935 5.488 1.575 7.928L12 17.76z" fill="#F4AE86"/></svg>
@@ -101,7 +106,6 @@ if(popularRates){
                     </span>`
   popularRates.insertAdjacentHTML('afterbegin', popularText)
 }
-
 // анимация стрелок скорости тарифа 
 function animateSpeed(){
   let path = document.querySelectorAll('.speed_arrow')
@@ -121,7 +125,6 @@ function animateSpeed(){
     step += 800
   })
 }
-
 // запуск при прокрутке до тарифных планов анимация стрелок скорости тарифа 
 window.addEventListener('scroll', ()=>{
   if(elementInViewport(ratesList)){
@@ -155,67 +158,106 @@ function elementInViewport(el) {
 }
 // подкрузка формы заявки на подключение
 function getForm(url){
+  offer_wrap.style.display = 'none'
+  loader.style.display = 'block'
+  if(document.querySelector('.application')){
+    document.querySelector('.application').remove()
+  }
   return new Promise((resolve, reject)=>{
     fetch(url).then(function (response) {
       return response.text()
     }).then(function (html) {
-      let offer_wrap = document.querySelector('.offer_wrap')
-      tl.to(offer_wrap, {opacity: 0, duration: .3}).then(res=>{
-        offer_wrap.style.display = 'none'
+      tl.kill()
+      tl.to(loader, {opacity: 0, duration: .3}).then(res=>{
+        loader.style.display = 'none'
+        loader.style.opacity = 1
         let offer = document.querySelector('.offer')
         offer.insertAdjacentHTML('beforeend', html)
         let form = offer.querySelector('.application')
         tl.to(form, {opacity: 1, translateY: '0px', duration: .2})
         let rateItems = form.querySelectorAll('.rates_dd_item')
-        let rateInput = form.querySelector('#rate')
-        form.querySelector('#rate').onfocus = function() {
-          tl.to('.rates_dd_list', {opacity: 1, height: 'auto', duration: .2})
-        };
+        let rateInput = form.querySelector('#rates')
+        let tokenInput = form.querySelector('#token')
+        let menu = form.querySelector('.rates_dd_list')
         rateInput.addEventListener('click', (e)=>{
-          
-        })
-        document.addEventListener('click', (e)=>{
-          let menu = form.querySelector('.rates_dd_list')
-          if(!menu.contains(e.target) && !form.querySelector('#rate').contains(e.target)){
-            tl.to('.rates_dd_list', {opacity: 0, height: '0px', duration: .2})
-          }
-        })
-
-        rateItems.forEach(rateItem=>{
-          rateItem.addEventListener('click', ()=>{
-            tl.to('.rates_dd_list', {opacity: 0, height: '0px', duration: .2})
-            form.querySelector('#rate').value = rateItem.innerHTML
-            
+          tl.to(menu, {opacity: 1, height: 'auto', duration: .2}).then(()=>{
+            document.addEventListener('click', (e)=>{
+              if(!menu.contains(e.target) && !form.querySelector('#rates').contains(e.target)){
+                tl.to(menu, {opacity: 0, height: '0px', duration: .2})
+              }
+            })
           })
         })
-        
+        rateItems.forEach(rateItem=>{
+          rateItem.addEventListener('click', ()=>{
+            tl.to(menu, {opacity: 0, height: '0px', duration: .2})
+            form.querySelector('#rates').value = rateItem.innerHTML
+            form.querySelector('#rate').value = rateItem.dataset.rate
+            rateItem.closest('.rates_dd')?.querySelector('.err') && rateItem.closest('.rates_dd').querySelector('.err').remove()
+          })
+        })
         let phone = IMask(
         form.querySelector('#phone'), {
           mask: '+{7} (000) 000-00-00',
-          lazy: false,  // make placeholder always visible
-          placeholderChar: '0'     // defaults to '_'
+          lazy: false,
+          placeholderChar: '0'
         });
-
         resolve('form_done')
+        getRecaptcha(tokenInput)
+        let required = form.querySelectorAll('input[required]')
+        required.forEach(req=>{
+          req.addEventListener('input',()=>{
+            if(req.value != '' && req.value != '+7 (000) 000-00-00'){
+              req.nextElementSibling && req.nextElementSibling.remove()
+              form.querySelector('.send').disabled = false
+            }else{
+              req.insertAdjacentHTML('afterend', '<span class="err">Это поле не заполнено</span>');
+              form.querySelector('.send').disabled = true
+            }
+          })
+        })
         form.querySelector('.send').addEventListener('click', (event)=>{
           event.preventDefault()
-          let fio = form.querySelector('#fio').value
+          form.style.display = 'none'
+          loader.style.display = 'block'
+          let name = form.querySelector('#name').value
           let address = form.querySelector('#address').value
           let phone = form.querySelector('#phone').value
-          let data = {fio,address,phone}
-          
-          fetch('/ajax.html',{
+          let rates = form.querySelector('#rates').value
+          let url = form.dataset.action
+          let data = {action: 'handler',name,address,phone,rates}
+          const formdata = new FormData();
+          formdata.append('action', 'handler');
+          formdata.append('name', form.querySelector('#name').value);
+          formdata.append('address', form.querySelector('#address').value);
+          formdata.append('phone', form.querySelector('#phone').value);
+          formdata.append('rates', form.querySelector('#rates').value);
+          formdata.append('rate', form.querySelector('#rate').value);
+          formdata.append('token', form.querySelector('#token').value);
+          const params = new URLSearchParams(formdata);
+          fetch(url,{
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(data)
+            body: params
           })
-          .then(function (response) {
+          .then((response)=> {
             return response.json()
           })
-          .then(res=>{
-            console.log(res);
+          .then((res)=>{
+            tl.to(loader, {opacity: 0, duration: .2}).then(r=>{
+              loader.style.display = 'none'
+              document.querySelector('.offer').insertAdjacentHTML('beforeend', res.message)
+              tl.to('.message', {opacity: 1, translateY: '0px', duration: .2})
+              document.querySelector('.close').addEventListener('click', ()=>{
+                document.querySelector('.message').remove()
+                loader.style.display = 'block'
+                loader.style.opacity = 1
+                tl.to('.message', {opacity: 0, translateY: '-450px', duration: .2}).then(()=>{
+                  loader.style.display = 'none'
+                  offer_wrap.style.display = 'block'
+                  tl.to(offer_wrap, {opacity: 1, translateY: '0px', duration: .2})
+                })
+              })
+            })
           })
         })
       })
@@ -227,18 +269,17 @@ function getForm(url){
 document.querySelector('.offer_btn')?.addEventListener('click', (e)=>{
   getForm(e.target.dataset.action)
 })
-
 // плавная прокрутка до элемента
 function smoothScroll(target, speed) {
   return new Promise((resolve, reject)=>{
-    var scrollContainer = target;
+    let scrollContainer = target;
     do { //find scroll container
         scrollContainer = scrollContainer.parentNode;
         if (!scrollContainer) return;
         scrollContainer.scrollTop += 1;
     } while (scrollContainer.scrollTop == 0);
 
-    var targetY = 0;
+    let targetY = 0;
     do { //find the top of target relatively to the container
         if (target == scrollContainer) break;
         targetY += target.offsetTop;
@@ -253,25 +294,22 @@ function smoothScroll(target, speed) {
         }
     }
     // start scrolling
-    scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+    scroll(scrollContainer, scrollContainer.scrollTop+30, targetY, 0);
   })
 }
-
 // отрабатываем клик при выборе тарифа
-let ratesBtns = document.querySelectorAll('.rates_list_item_btn')
 ratesBtns.forEach(ratesBtn=>{
   ratesBtn.addEventListener('click', (e)=>{
       smoothScroll(document.querySelector('.offer'), 20).then(res=>{
         getForm(e.target.dataset.action).then(form=>{
           let items = [...document.querySelectorAll('.rates_dd_item')]
           let item = items.filter(item=>item.dataset.rate == e.target.dataset.rate)
-          document.querySelector('#rate').value = item[0].innerHTML
+          document.querySelector('#rates').value = item[0].innerHTML
+          document.querySelector('#rate').value = item[0].dataset.rate
         })
       })
   })
 })
-
-let accardeonItems = document.querySelectorAll('.accardeon_list_item')
 accardeonItems.forEach(accardeonItem=>{
   accardeonItem.addEventListener('click', (e)=>{
     let content = e.target.parentElement.querySelector('.accardeon_list_item_content')
@@ -282,6 +320,22 @@ accardeonItems.forEach(accardeonItem=>{
       e.target.classList.add('active')
       tl.to(content, {opacity: 1, height: 'auto', duration: .2})
     }
-
   })
 })
+burger.addEventListener('click', ()=>{
+  burger.classList.toggle('active')
+  if(burger.classList.contains('active')){
+    mobileMenu.classList.add('active')
+  }else{
+    mobileMenu.classList.remove('active')
+  }
+})
+window.addEventListener("scroll", function(){
+   let st = window.pageYOffset || document.documentElement.scrollTop;
+   if (st > lastScrollTop){
+      document.querySelector('.social').classList.add('show')
+   } else {
+      document.querySelector('.social').classList.remove('show')
+   }
+   lastScrollTop = st <= 0 ? 0 : st; // For Mobile or negative scrolling
+}, false);
