@@ -4,7 +4,7 @@ add_action('wp_ajax_nopriv_handler', 'applicationAdd');
 header('Access-Control-Allow-Origin: *');
 function applicationAdd(){
   $res = array('success' => false);
-// Проверка, что есть POST запрос
+  // Проверка, что есть POST запрос
   if ($_POST) {
     $is_valid = returnReCaptcha($_POST['token']);
     $the_post = get_post($_POST['rates']);
@@ -165,7 +165,14 @@ function sendEmail($feed, $post_id){
 		// }
 		return $phpmailer->Send(); // отправка письма
 }
-
-// header('Content-Type: application/json');
-// header('Access-Control-Allow-Origin: *');
+add_action('wp_ajax_handler_map', 'savePoligonCoords'); // wp_ajax_{ACTION HERE} 
+add_action('wp_ajax_nopriv_handler_map', 'savePoligonCoords');
+function savePoligonCoords(){
+  set_theme_mod( 'maps', $_POST['poligons']);
+  $res['message'] = 'координаты успешно сохранены';
+  $res['coords'] = $_POST['poligons'];
+  $res['success'] = true;
+  echo json_encode($res);
+  die();
+}
 ?>
