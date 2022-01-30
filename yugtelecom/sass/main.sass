@@ -6,6 +6,7 @@
 .wrapper
   position: relative
   z-index: 999
+  overflow: hidden
   padding: 0 20px
   
   background-color: #fff
@@ -155,7 +156,19 @@ section
   height: 195px
   list-style: none
   z-index: 999
+  // &.show
+  //   li
+  //     &.white
+  //       a
+  //         border-color: #241D19
+  //         svg
+  //           fill: #241D19
   li
+    &.white
+      a
+        border-color: #F4AE86 
+        svg
+          fill: #F4AE86
     a
       display: flex
       justify-content: center
@@ -244,6 +257,7 @@ section
 @import 'rates'
 @import 'accardeon'
 @import 'advantages'
+@import 'roket'
 @import 'media'
 
   

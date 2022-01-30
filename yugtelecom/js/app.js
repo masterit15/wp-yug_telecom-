@@ -512,7 +512,25 @@ burger.addEventListener('click', () => {
     mobileMenu.classList.remove('active')
   }
 })
+function changeColorSocIcon() {
+  const socialItems = document.querySelectorAll('.social li')
+  socialItems.forEach(socialItem => {
+    if (socialItem.getBoundingClientRect().bottom - socialItem.offsetHeight + 15 >= document.querySelector('.footer').getBoundingClientRect().top) {
+      socialItem.classList.add('white')
+    } else {
+      socialItem.classList.remove('white')
+    }
+  })
+}
+document.addEventListener('DOMContentLoaded', changeColorSocIcon)
+
 window.addEventListener("scroll", function () {
+  changeColorSocIcon()
+  if (window.pageYOffset >= 300) {
+    document.querySelector('#toTop').classList.add('active')
+  } else {
+    document.querySelector('#toTop').classList.remove('active')
+  }
   let st = window.pageYOffset || document.documentElement.scrollTop;
   if (st > lastScrollTop) {
     document.querySelector('.social').classList.add('show')
@@ -520,4 +538,42 @@ window.addEventListener("scroll", function () {
     document.querySelector('.social').classList.remove('show')
   }
   lastScrollTop = st <= 0 ? 0 : st; // For Mobile or negative scrolling
+
+
 }, false);
+
+
+document.querySelector('#toTop').addEventListener('click', () => {
+  document.querySelector('#toTop').classList.add('animation')
+  doScrolling('.header', 1200).then(() => {
+    document.querySelector('#toTop').classList.remove('animation')
+  })
+})
+function doScrolling(element, duration) {
+  return new Promise((resolve, reject) => {
+    const getElementY = (query) => {
+      return window.pageYOffset + document.querySelector(query).getBoundingClientRect().top
+    }
+    let startingY = window.pageYOffset
+    let elementY = getElementY(element)
+    let targetY = document.body.scrollHeight - elementY < window.innerHeight ? document.body.scrollHeight - window.innerHeight : elementY
+    let diff = targetY - startingY
+    let easing = function (t) { return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1 }
+    let start
+    if (!diff) return
+    window.requestAnimationFrame(function step(timestamp) {
+      if (!start) start = timestamp
+      let time = timestamp - start
+      let percent = Math.min(time / duration, 1)
+      percent = easing(percent)
+      if (percent == 1) {
+        resolve(percent)
+      }
+      window.scrollTo(0, startingY + diff * percent)
+      if (time < duration) {
+
+        window.requestAnimationFrame(step)
+      }
+    })
+  })
+}

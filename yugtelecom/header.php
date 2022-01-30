@@ -29,7 +29,7 @@ define("TURI",     get_template_directory_uri().'/');
 		<span class="elips-big"></span>
 		<span class="elips-big-light"></span>
 		<div class="container"><!-- start container -->
-		<header class="header">
+		<header class="header" id="header">
 			<a href="/" class="logo"><img src="<?=TURI?>/images/dist/logo.svg" alt=""></a>
 			<nav class="top_nav">
 				<?php

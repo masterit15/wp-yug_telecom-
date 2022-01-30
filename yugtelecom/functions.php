@@ -223,6 +223,11 @@ require get_template_directory() . '/inc/application.php';
  * supports
  */
 require get_template_directory() . '/inc/supports.php';
+/**
+ * advantages
+ */
+require get_template_directory() . '/inc/advantages.php';
+
 
 /**
  * Load Jetpack compatibility file.

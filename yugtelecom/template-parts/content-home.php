@@ -54,7 +54,7 @@
 			<li class="rates_list_item <?if($custom['rates_popular'][0] == 'y'){?>popular<?}?>" data-speed="<?=$speed?>">
       <h3 class="rates_list_item_title"><?the_title()?></h3>
       <div class="rates_list_item_speedometer">
-        <svg width="84" height="67" version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      <svg width="84" height="67" version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
           viewBox="0 0 90 75" style="enable-background:new 0 0 90 75;" xml:space="preserve">
         <style type="text/css">
           .st0{fill:#00C9AF;}
@@ -121,6 +121,7 @@
         </mask>
         <path class="st12" d="M36.2,67h17c0.6,0,1,0.4,1,1v4c0,0.6-0.4,1-1,1h-17c-0.6,0-1-0.4-1-1v-4C35.2,67.4,35.7,67,36.2,67z"/>
         </svg>
+
       </div>
       <ul class="rates_list_item_speed">
         <li><span>Скорость</span> <strong><?=$custom['rates_speed'][0]?> Мбит/сек</strong></li>
@@ -161,13 +162,9 @@
   <?
 			$reviews = new WP_Query(
 			array(
-			'post_type' => 'post',
+			'post_type' => 'advantages',
 			'post_status' => 'publish',
-			'posts_per_page' => 5,
-			// 'orderby'          => 'date',
-      // 'order'            => 'ASC',
-			'page'=> 1
-			// 'category_name' => 'news'
+			'posts_per_page' => 6,
 			));
 			
 			if ($reviews->have_posts()) {
