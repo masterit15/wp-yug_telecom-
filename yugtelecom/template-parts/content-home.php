@@ -168,7 +168,6 @@
 			));
 			
 			if ($reviews->have_posts()) {
-				$speed = 9;
 				while ($reviews->have_posts()) {$reviews->the_post();
 		?>
     <li class="advantages_list_item">

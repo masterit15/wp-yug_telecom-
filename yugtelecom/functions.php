@@ -16,7 +16,7 @@ function PR($var, $all = false, $die = false) {
 	$dRoot = str_replace("\\", "/", $dRoot);
 	$bt["file"] = str_replace($dRoot, "", $bt["file"]);
 	?>
-		<div style='font-size:9pt; color:#000; background:#fff; border:1px dashed #000;z-index: 999'>
+		<div style='position: relative;font-size:9pt; color:#000; background:#fff; border:1px dashed #000;z-index: 999'>
 		<div style='padding:3px 5px; background:#99CCFF; font-weight:bold;'>File: <?=$bt["file"]?> [<?=$bt["line"]?>]</div>
 		<pre style='padding:10px;'><?print_r($var)?></pre>
 		</div>
@@ -236,5 +236,26 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+//Удаляем определённые карты сайта из индекса
+add_filter( 'wp_sitemaps_add_provider', 'truemisha_remove_user_sitemap', 25, 2 );
 
-
+function truemisha_remove_user_sitemap( $provider, $name ) {
+	// PR($name);
+	$links = ['users', 'user-agreement', 'taxonomies'];
+		if (in_array($name, $links)) { // если архивы пользователей, то отключаем
+			return false;
+		}
+	return $provider;
+ 
+}
+//Убираем определённые типы постов из карты
+add_filter( 'wp_sitemaps_post_types', 'truemisha_remove_pages', 25 );
+ 
+function truemisha_remove_pages( $post_types ) {
+ PR($post_types);
+	unset( $post_types['advantages'] );
+	unset( $post_types['supports'] );
+	unset( $post_types['rates'] );
+	return $post_types;
+ 
+}
