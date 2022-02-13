@@ -7,13 +7,21 @@
  * Contains handlers to make Theme Customizer preview reload changes asynchronously.
  */
 
-// ( function( $ ) {
-// 	// Site title and description.
-// 	wp.customize( 'blogname', function( value ) {
-// 		value.bind( function( to ) {
-// 			$( '.site-title a' ).text( to );
-// 		} );
-// 	} );
+( function( $ ) {
+
+	wp.customize( 'notification', function( value ) {
+		value.bind( function( to ) {
+      var defaultCount = 170
+      if (to.length > defaultCount){
+        var count = Number(to.length) - Number(defaultCount)
+        $('.notification').addClass('error')
+        $('.notification_text').html('Вы превысили количество символов на '+count+' знак(ов)!')
+      }else{
+        $('.notification').removeClass('error')
+        $('.notification_text').text(to)
+      }
+		} );
+	} );
 // 	wp.customize( 'blogdescription', function( value ) {
 // 		value.bind( function( to ) {
 // 			$( '.site-description' ).text( to );
@@ -39,4 +47,4 @@
 // 			}
 // 		} );
 // 	} );
-// }( jQuery ) );
+}( jQuery ) );

@@ -48,9 +48,7 @@ $(function() {
 $('.delete').one('click', function(){
     let vId = $(this).data('video-id')
     let videos = $('input[name="videos"]').val() != '' ? $('input[name="videos"]').val().split(',') : []
-    console.log('bef', vId);
     videos = videos.filter(vd=>vd != vId)
-    console.log('aff', videos);
     $('input[name="videos"]').val(videos.join(','))
     $(`.video[data-video-id="${vId}"]`).remove()
 })

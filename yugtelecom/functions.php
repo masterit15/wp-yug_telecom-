@@ -252,10 +252,57 @@ function truemisha_remove_user_sitemap( $provider, $name ) {
 add_filter( 'wp_sitemaps_post_types', 'truemisha_remove_pages', 25 );
  
 function truemisha_remove_pages( $post_types ) {
- PR($post_types);
 	unset( $post_types['advantages'] );
 	unset( $post_types['supports'] );
 	unset( $post_types['rates'] );
 	return $post_types;
  
+}
+
+function dateModify($date){
+	$_monthsList = array(
+		"-01-" => "Январь",
+		"-02-" => "Февраль",
+		"-03-" => "Март",
+		"-04-" => "Апрель",
+		"-05-" => "Май",
+		"-06-" => "Июня",
+		"-07-" => "Июля",
+		"-08-" => "Августа",
+		"-09-" => "Сентября",
+		"-10-" => "Октября",
+		"-11-" => "Ноября",
+		"-12-" => "Декабря"
+	);
+	$date = explode(' ', $date)[0];
+	$_mD = date("-m-", strtotime($date));
+	$currentDate = explode('-', str_replace($_mD, "-".$_monthsList[$_mD]."-", $date));
+	echo $currentDate[1].' '.$currentDate[2].' '.$currentDate[0];
+}
+
+function wpschool_page_navi() {
+	global $wp_query;
+	$pages = '';
+	$maxpages = $wp_query->max_num_pages;
+	if ( !$currentpage = get_query_var( 'paged' ) ) {
+			$currentpage = 1;
+	}
+	$link['base'] = str_replace( 999999999, '%#%', get_pagenum_link( 999999999 ) );
+	$link['totalpages'] = $maxpages;
+	$link['currentpage'] = $currentpage;
+	$totalpages = 0; //1 - вывести "Страница N из N", 0 - не выводить
+	$link['mid_size'] = 3; //к-во ссылок показывать слева и справа от текущей
+	$link['end_size'] = 1; //к-во ссылок показывать в начале и в конце
+	$link['prev_text'] = 'Пред.';
+	$link['next_text'] = 'След.';
+	if ( $maxpages > 1 ) {
+			echo '<div class="pagination">';
+	}
+	if ( $totalpages == 1 && $maxpages > 1 ) {
+			$pages = '<span class="pages">Страница ' . $currentpage . ' из ' . $maxpages . '</span>'."\r\n";
+	}
+	echo $pages . paginate_links($link);
+	if ( $maxpages > 1 ) {
+			 echo '</div>';
+	}
 }

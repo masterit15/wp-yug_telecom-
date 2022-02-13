@@ -12,6 +12,16 @@
 <span class="elips-small-red"></span>
 <section class="hero">
   <div class="offer">
+    <?if(get_theme_mod('notification') != ''){?>
+      <div class="notification" <?if(mb_strlen(get_theme_mod('notification'),'UTF-8') > 170){?>style="display: none;"<?}?>>
+        <div class="notification_icon">
+          <svg width="25" height="24" viewBox="0 0 25 24">
+            <path d="M12.5 22C6.977 22 2.5 17.523 2.5 12C2.5 6.477 6.977 2 12.5 2C18.023 2 22.5 6.477 22.5 12C22.5 17.523 18.023 22 12.5 22ZM12.5 20C14.6217 20 16.6566 19.1571 18.1569 17.6569C19.6571 16.1566 20.5 14.1217 20.5 12C20.5 9.87827 19.6571 7.84344 18.1569 6.34315C16.6566 4.84285 14.6217 4 12.5 4C10.3783 4 8.34344 4.84285 6.84315 6.34315C5.34285 7.84344 4.5 9.87827 4.5 12C4.5 14.1217 5.34285 16.1566 6.84315 17.6569C8.34344 19.1571 10.3783 20 12.5 20ZM11.5 15H13.5V17H11.5V15ZM11.5 7H13.5V13H11.5V7Z"/>
+          </svg>
+        </div>
+        <div class="notification_text"><?=get_theme_mod('notification')?></div>
+      </div>
+    <?}?>
     <div class="loader"></div>
     <div class="offer_wrap">
       <h2 class="offer_title title"><?=get_theme_mod('offer_title')?></h2>
@@ -29,6 +39,32 @@
     наши тарифы
   </span>
 </section>
+<?if(wp_count_posts('post')->publish > 0){?>
+  <section class="news">
+    <h2 class="section_title title">Последние новости</h2>
+    <div class="news_list">
+    <?
+        $reviews = new WP_Query(
+        array(
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'posts_per_page' => 6,
+        ));
+        if ($reviews->have_posts()) {
+          while ($reviews->have_posts()) {$reviews->the_post();
+      ?>
+      <article class="news_list_item">
+        <div class="news_list_item_media" style="background-image: url(<?=get_the_post_thumbnail_url($post->ID, 'large')?>);"></div>
+        <div class="news_list_item_content">
+          <h3 class="news_list_item_title"><a href="<?=get_permalink()?>"><?the_title()?></a></h3>
+          <div class="news_list_item_desc"><?the_excerpt()?></div>
+          <span class="news_list_item_date"><? dateModify($reviews->post->post_date)?></span>
+        </div>
+      </article>
+      <?}}?>
+    </div>
+  </section>
+<?}?>
 <section class="rates">
   <h2 class="section_title title">Выберите подходящий тарифный план</h2>
   <ul class="rates_list">
@@ -41,7 +77,6 @@
 			'orderby'          => 'date',
       'order'            => 'ASC',
 			'page'=> 1
-			// 'category_name' => 'news'
 			));
 			
 			if ($reviews->have_posts()) {
@@ -49,7 +84,6 @@
 				while ($reviews->have_posts()) {$reviews->the_post();
 				
 				$custom = get_post_custom($reviews->ID);
-			// PR($custom);
 		?>
 			<li class="rates_list_item <?if($custom['rates_popular'][0] == 'y'){?>popular<?}?>" data-speed="<?=$speed?>">
       <h3 class="rates_list_item_title"><?the_title()?></h3>

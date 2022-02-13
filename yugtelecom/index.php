@@ -16,18 +16,11 @@ get_header();
 ?>
 
 	<main id="primary" class="site-main">
-
+	<section class="news">
+    <h2 class="section_title title">Последние новости</h2>
+    <div class="news_list">
 		<?php
 		if ( have_posts() ) :
-
-			if ( is_home() && ! is_front_page() ) :
-				?>
-				<header>
-					<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
-				</header>
-				<?php
-			endif;
-
 			/* Start the Loop */
 			while ( have_posts() ) :
 				the_post();
@@ -40,16 +33,15 @@ get_header();
 				get_template_part( 'template-parts/content', get_post_type() );
 
 			endwhile;
-
-			the_posts_navigation();
-
 		else :
 
 			get_template_part( 'template-parts/content', 'none' );
 
 		endif;
 		?>
-
+				</div>
+				<?php if (function_exists('wpschool_page_navi')) wpschool_page_navi(); ?>
+	</section>
 	</main><!-- #main -->
 
 <?php

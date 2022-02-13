@@ -57,7 +57,7 @@ function browsersync() {
 // 		.pipe(browserSync.stream()) // Триггерим Browsersync для обновления страницы
 // }
 function scripts() {
-	return src([`${baseDir}/js/*.js`, `!${baseDir}/js/*.min.js`])
+	return src([`${baseDir}/js/*.js`, `!${baseDir}/js/*.min.js`, `!${baseDir}/js/customizer.js`])
 		.pipe(webpack({
 			mode: 'production',
 			performance: { hints: false },

@@ -1,0 +1,107 @@
+.news
+  &_detail
+    
+    &_item
+      max-width: 95%
+      margin-top: 70px
+      &_title
+        margin: 0
+        text-decoration: none
+        font-family: $AlumniSans
+        font-style: normal
+        font-weight: 600
+        font-size: 22px
+        line-height: 26px
+        letter-spacing: 0.01em
+        color: #241D19
+      &_date
+        font-family: $AlumniSans
+        font-style: normal
+        font-weight: normal
+        font-size: 18px
+        line-height: 22px
+        color: rgba(36, 29, 25, 0.5)
+      &_desc
+        font-family: $YanoneKaffeesatz
+        font-style: normal
+        font-weight: normal
+        font-size: 28px
+        line-height: 120%
+        letter-spacing: 0.03em
+        color: rgba(36, 29, 25, 0.6)
+      &_media
+        display: block
+        float: left
+        width: 409px
+        height: 277px
+        background-position: 50% 50%
+        background-size: cover
+        margin-right: 30px
+        margin-bottom: 30px
+  &_list
+    display: flex
+    justify-content: flex-start
+    gap: 28px
+    &_item
+      width: 263px
+      height: 355px
+      background-color: #fff
+      position: relative
+      transition: all .3s ease
+      &::before
+        content: ''
+        position: absolute
+        bottom: 0
+        left: 0
+        height: 1px
+        width: 100%
+        background-color: rgba(196, 196, 196, 0.5)
+        transition: all .3s ease
+      &:hover
+        box-shadow: 0px 7px 38px rgba(26, 23, 18, 0.14)
+        &::before
+          height: 4px
+          background-color: #F4AE86
+          transition: all .3s ease
+      &_media
+        width: 100%
+        height: 150px
+      &_content
+        margin: 20px 15px 0
+      &_title
+        margin: 0
+        a
+          text-decoration: none
+          font-family: $AlumniSans;
+          font-style: normal
+          font-weight: 600
+          font-size: 22px
+          line-height: 26px
+          letter-spacing: 0.01em
+          color: #241D19
+          &:active, &:visited
+            text-decoration: none
+            color: #241D19
+      &_desc
+        margin-top: 10px
+        font-family: $YanoneKaffeesatz
+        font-style: normal
+        font-weight: normal
+        font-size: 14px
+        line-height: 120%
+        letter-spacing: 0.03em
+        color: rgba(36, 29, 25, 0.6)
+        max-height: 70px
+        overflow: hidden
+        p
+          margin: 0
+      &_date
+        position: absolute
+        left: 15px
+        bottom: 15px
+        font-family: $AlumniSans
+        font-style: normal
+        font-weight: normal
+        font-size: 18px
+        line-height: 22px
+        color: rgba(36, 29, 25, 0.5)

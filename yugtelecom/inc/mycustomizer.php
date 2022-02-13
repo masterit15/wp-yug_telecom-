@@ -136,4 +136,29 @@ add_action('customize_register', function ($customizer) {
     'section' => 'section_soc',
     'type' => 'text',
   ));
+
+
+// Уведомления ==========================================================
+$customizer->add_section(
+  'section_notification',
+  array(
+    'title' => 'Уведомления',
+    'description' => 'Указываем текст уведомления',
+    'priority' => 10,
+  )
+);
+$customizer->add_setting(
+  'notification',
+  array(
+    'default' => '',
+    'transport' => 'postMessage'
+    )
+);
+$customizer->add_control('notification', array(
+  'label' => 'Уведомление',
+  'section' => 'section_notification',
+  'type' => 'textarea',
+));
+
 });
+

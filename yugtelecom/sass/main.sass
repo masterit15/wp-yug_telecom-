@@ -288,14 +288,42 @@ section
   width: 120px
   height: 125px
   display: block
-
+.notification
+  display: flex
+  justify-content: flex-start
+  align-items: center
+  gap: 10px
+  &.error
+    .notification_text
+      color: #e05050
+    .notification_icon svg
+      fill: #e05050
+  &_icon
+    width: 24px
+    height: 24px
+  &_text
+    font-family: $AlumniSans
+    font-style: normal
+    font-weight: bold
+    font-size: 22px
+    line-height: 26px
+    color: #241D19
+.site-main
+  margin-bottom: 40px
+  .news
+    &_list
+      margin: auto
+      max-width: 1430px
+      flex-wrap: wrap
 @import 'offer'
 @import 'form'
 @import 'loader'
 @import 'rates'
+@import 'news'
 @import 'accardeon'
 @import 'advantages'
 @import 'roket'
+@import 'pagination'
 @import 'media'
 
   
